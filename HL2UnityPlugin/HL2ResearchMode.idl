@@ -72,5 +72,6 @@ namespace HL2UnityPlugin
         void SetPointCloudDepthOffset(UInt16 offset);
 
         void ProjectDepthCameraSpaceToImagePoint(Single x, Single y, out Single u, out Single v);
+        void ProjectDepthPointToCameraSpace(Single u, Single v, out Single x, out Single y);
     }
 }

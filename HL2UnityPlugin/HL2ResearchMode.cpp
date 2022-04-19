@@ -160,9 +160,18 @@ namespace winrt::HL2UnityPlugin::implementation
         m_pDepthUpdateThread = new std::thread(HL2ResearchMode::DepthSensorLoop, this);
     }
 
+    void HL2ResearchMode::ProjectDepthPointToCameraSpace(float u, float v, float& x, float& y)
+    {
+        float uv[2] = { u, v };
+        float xy[2] = { 0, 0 };
+        this->m_pDepthCameraSensor->MapImagePointToCameraUnitPlane(uv, xy);
+
+        x = xy[0];
+        y = xy[1];
+    }
+
     void HL2ResearchMode::ProjectDepthCameraSpaceToImagePoint(float x, float y, float& u, float& v)
     {
-        //this->m_depthSensor->OpenStream();
         float xy[2] = { x, y };
         float uv[2] = { 0, 0 };
         this->m_pDepthCameraSensor->MapCameraSpaceToImagePoint(xy, uv);

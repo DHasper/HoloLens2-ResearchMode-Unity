@@ -76,7 +76,8 @@ namespace winrt::HL2UnityPlugin::implementation
         com_array<uint8_t> GetRFCameraBuffer(int64_t& ts);
         com_array<uint8_t> GetLRFCameraBuffer(int64_t& ts_left, int64_t& ts_right);
 
-        void ProjectDepthCameraSpaceToImagePoint(float x, float y, float& u, float&v);
+        void ProjectDepthCameraSpaceToImagePoint(float x, float y, float& u, float& v);
+        void ProjectDepthPointToCameraSpace(float u, float v, float& x, float& y);
 
         com_array<float> GetAccelSample();
         com_array<float> GetGyroSample();
