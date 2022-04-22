@@ -135,6 +135,9 @@ namespace winrt::HL2UnityPlugin::implementation
         std::atomic_uint16_t m_centerDepth = 0;
         float m_centerPoint[3]{ 0,0,0 };
 
+        // Time betweens frames in ms (67ms = ~15fps).
+        static const int DEPTHLOOP_FRAMETIME = 67;
+
         std::atomic_bool m_depthSensorLoopStarted = false;
         std::atomic_bool m_longDepthSensorLoopStarted = false;
         std::atomic_bool m_spatialCamerasFrontLoopStarted = false;

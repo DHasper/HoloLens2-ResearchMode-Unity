@@ -13,6 +13,7 @@ static ResearchModeSensorConsent imuAccessCheck;
 static HANDLE imuConsentGiven;
 
 using namespace DirectX;
+using namespace std::chrono;
 using namespace winrt::Windows::Perception;
 using namespace winrt::Windows::Perception::Spatial;
 using namespace winrt::Windows::Perception::Spatial::Preview;
@@ -191,11 +192,25 @@ namespace winrt::HL2UnityPlugin::implementation
 
         pHL2ResearchMode->m_depthSensor->OpenStream();
 
+        auto frameStartTime = time_point_cast<milliseconds>(high_resolution_clock::now());
+
         try 
         {
             UINT64 lastTs = 0;
             while (pHL2ResearchMode->m_depthSensorLoopStarted)
             {
+                // Only execute code if there is enough time between frames.
+                auto currentTime = time_point_cast<std::chrono::milliseconds>(high_resolution_clock::now());
+
+                int elapsedTime = currentTime.time_since_epoch().count() - frameStartTime.time_since_epoch().count();
+                if (elapsedTime < DEPTHLOOP_FRAMETIME)
+                {
+                    std::this_thread::sleep_for(milliseconds(1));
+                    continue;
+                }
+
+                frameStartTime = time_point_cast<milliseconds>(high_resolution_clock::now());
+
                 IResearchModeSensorFrame* pDepthSensorFrame = nullptr;
                 ResearchModeSensorResolution resolution;
                 pHL2ResearchMode->m_depthSensor->GetNextBuffer(&pDepthSensorFrame);
