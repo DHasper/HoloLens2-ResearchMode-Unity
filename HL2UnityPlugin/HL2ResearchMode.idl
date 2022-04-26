@@ -28,6 +28,7 @@ namespace HL2UnityPlugin
         Single[] GetCenterPoint();
         Int32 GetDepthBufferSize();
         Int32 GetLongDepthBufferSize();
+        float[] GetDepthExtrinsics();
         String PrintDepthResolution();
         String PrintDepthExtrinsics();
 		String PrintLFResolution();

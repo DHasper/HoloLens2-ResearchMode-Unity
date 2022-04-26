@@ -995,6 +995,22 @@ namespace winrt::HL2UnityPlugin::implementation
         return winrt::to_hstring(res_c_ctr);
     }
 
+    com_array<float> HL2ResearchMode::GetDepthExtrinsics()
+    {
+        float* poseArray = new float[16];
+        for (size_t i = 0; i < 4; i++)
+        {
+            for (size_t j = 0; j < 4; j++)
+            {
+                poseArray[i * 4 + j] = m_depthCameraPose(i, j);
+            }
+        }
+
+        com_array<float> tempBuffer = com_array<float>(std::move_iterator(poseArray), std::move_iterator(poseArray + 16));
+
+        return tempBuffer;
+    }
+
     hstring HL2ResearchMode::PrintDepthExtrinsics()
     {
         std::stringstream ss;

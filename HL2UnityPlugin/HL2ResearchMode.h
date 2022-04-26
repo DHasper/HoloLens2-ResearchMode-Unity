@@ -25,6 +25,7 @@ namespace winrt::HL2UnityPlugin::implementation
         UINT16 GetCenterDepth();
         int GetDepthBufferSize();
         int GetLongDepthBufferSize();
+        com_array<float> GetDepthExtrinsics();
         hstring PrintDepthResolution();
         hstring PrintDepthExtrinsics();
 		hstring PrintLFResolution();
